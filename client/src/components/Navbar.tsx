@@ -1,5 +1,3 @@
-// Cinematic Noir — Navbar with Services dropdown
-// Larger nav with blue-tinted transparent glass background
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { BRAND } from '@/lib/images';
@@ -48,14 +46,24 @@ export default function Navbar() {
     >
       {/* Full-size container: h-16 mobile, h-20 desktop */}
       <div className="container flex items-center justify-between h-16 md:h-20">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
+        <Link href="/" className="flex items-center gap-2 shrink-0 group">
+          <div className="relative">
+            <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 opacity-75 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500 animate-[spin_4s_linear_infinite] motion-reduce:animate-none" />
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-orange-400 via-yellow-300 to-red-500 opacity-50 blur-sm animate-[spin_3s_linear_infinite_reverse] motion-reduce:animate-none" />
+            <img
+              src={BRAND.icon}
+              alt="The Lens Bros"
+              className="relative h-9 md:h-11 w-9 md:w-11 rounded-full object-contain ring-1 ring-orange-400/50"
+              width={44}
+              height={44}
+            />
+          </div>
           <img
             src={BRAND.logoTagline}
-            alt="The Lens Bros — Shot Today. Delivered Tomorrow."
-            className="h-10 md:h-12 w-auto object-contain"
-            width={240}
-            height={48}
+            alt="Shot Today. Delivered Tomorrow."
+            className="h-8 md:h-10 w-auto object-contain brightness-125"
+            width={200}
+            height={40}
           />
         </Link>
 
@@ -73,8 +81,8 @@ export default function Navbar() {
                   href={link.href}
                   className={`flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors rounded-md ${
                     location.startsWith('/services')
-                      ? 'text-white'
-                      : 'text-white/60 hover:text-white'
+                      ? 'text-white drop-shadow-[0_0_6px_rgba(255,255,255,0.3)]'
+                      : 'text-white/80 hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]'
                   }`}
                 >
                   {link.label}
@@ -109,8 +117,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-4 py-2 text-sm font-medium transition-colors rounded-md ${
                   location === link.href
-                    ? 'text-white'
-                    : 'text-white/60 hover:text-white'
+                    ? 'text-white drop-shadow-[0_0_6px_rgba(255,255,255,0.3)]'
+                    : 'text-white/80 hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]'
                 }`}
               >
                 {link.label}
@@ -147,7 +155,7 @@ export default function Navbar() {
               <div key={link.label}>
                 <button
                   onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                  className="flex items-center justify-between w-full px-4 py-3 text-base font-medium text-white/70 hover:text-white transition-colors"
+                  className="flex items-center justify-between w-full px-4 py-3 text-base font-medium text-white/85 hover:text-white transition-colors"
                 >
                   {link.label}
                   <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
@@ -170,7 +178,7 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="block px-4 py-3 text-base font-medium text-white/70 hover:text-white transition-colors"
+                className="block px-4 py-3 text-base font-medium text-white/85 hover:text-white transition-colors"
               >
                 {link.label}
               </Link>
