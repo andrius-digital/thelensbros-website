@@ -12,7 +12,7 @@ import GlowCard from '@/components/GlowCard';
 import AnimatedGradient from '@/components/AnimatedGradient';
 import { useParallax } from '@/hooks/useScrollAnimation';
 import SEOHead from '@/components/SEOHead';
-import { ArrowRight, Clock, Camera, Zap, Star, ChevronRight } from 'lucide-react';
+import { ArrowRight, Clock, Camera, Zap, Star, ChevronRight, CheckCircle2, Gift, Shield, Users, TrendingUp } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
 
 function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
@@ -130,116 +130,173 @@ export default function Home() {
       <Navbar />
 
       {/* ═══════════════ HERO WITH VIDEO BACKGROUND ═══════════════ */}
-      <section ref={heroParallax} className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
-        {/* Video or Image Background with parallax */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{ transform: `translateY(${heroOffset}px)` }}
-        >
+      <section ref={heroParallax} className="relative min-h-svh flex items-center overflow-hidden py-12 lg:py-0">
+        {/* Video/Image Background */}
+        <div className="absolute inset-0 z-0" style={{ transform: `translateY(${heroOffset}px)` }}>
           {HERO_VIDEO_URL ? (
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="w-full h-[120%] object-cover object-center"
-              poster={IMAGES.hero}
-            >
+            <video autoPlay loop muted playsInline preload="auto" className="w-full h-[115%] object-cover" poster={IMAGES.hero}>
               <source src={HERO_VIDEO_URL} type="video/mp4" />
             </video>
           ) : (
-            <img
-              src={IMAGES.hero}
-              alt="Professional photographer with Chicago skyline"
-              className="w-full h-[120%] object-cover object-center"
-              width={1600}
-              height={893}
-              fetchPriority="high"
-              decoding="sync"
-            />
+            <img src={IMAGES.hero} alt="Professional photographer with Chicago skyline" className="w-full h-[115%] object-cover" width={1600} height={893} fetchPriority="high" decoding="sync" />
           )}
-          {/* Dark overlay gradients */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.04_0.01_270/0.95)] via-[oklch(0.04_0.01_270/0.75)] to-[oklch(0.04_0.01_270/0.55)]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.08_0.015_270)] via-transparent to-[oklch(0.04_0.01_270/0.3)]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.04_0.01_270/0.95)] via-[oklch(0.04_0.01_270/0.8)] to-[oklch(0.04_0.01_270/0.5)]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.06_0.01_270)] via-transparent to-[oklch(0.04_0.01_270/0.3)]" />
         </div>
 
-        {/* Particle Canvas overlay */}
-        <div className="absolute inset-0 z-[1]">
-          <ParticleCanvas particleCount={35} connectionDistance={100} speed={0.2} />
-        </div>
-
-        {/* Floating Orbs */}
-        <FloatingOrbs variant="hero" className="z-[1]" />
-
-        {/* Animated scan line effect */}
-        <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-          <div
-            className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[oklch(0.65_0.2_250/0.15)] to-transparent"
-            style={{ animation: 'scan-line 8s linear infinite' }}
-          />
+        {/* Particles (desktop only for perf) */}
+        <div className="absolute inset-0 z-[1] hidden lg:block">
+          <ParticleCanvas particleCount={25} connectionDistance={80} speed={0.15} />
         </div>
 
         <div className="container relative z-10">
-          <div className="max-w-2xl">
-            <AnimatedSection delay={200}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="h-px w-12 bg-gradient-to-r from-[oklch(0.65_0.2_250)] to-[oklch(0.75_0.14_80)] animate-shimmer" />
-                <span className="font-display text-xs uppercase tracking-[0.25em] text-[oklch(0.75_0.14_80)] font-medium">
-                  Chicago &bull; Miami
-                </span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 items-center">
+
+            {/* LEFT — Copy (mobile: compact, desktop: full) */}
+            <div className="lg:col-span-7">
+              {/* Social proof - single line */}
+              <AnimatedSection delay={100}>
+                <div className="flex items-center gap-3 text-white/40 text-[11px] mb-3">
+                  <div className="flex items-center gap-1">
+                    {[1,2,3,4,5].map(i => (
+                      <Star key={i} className="w-3 h-3 fill-[oklch(0.75_0.14_80)] text-[oklch(0.75_0.14_80)]" />
+                    ))}
+                  </div>
+                  <span><strong className="text-white/60">4.9/5</strong> from 500+ projects</span>
+                  <span className="hidden md:inline text-[oklch(0.75_0.14_80)] font-display uppercase tracking-[0.15em] font-medium">Chicago &bull; Miami</span>
+                </div>
+              </AnimatedSection>
+
+              {/* H1 */}
+              <AnimatedSection delay={200}>
+                <h1 className="font-display font-extrabold text-[1.75rem] leading-[1] sm:text-4xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-3">
+                  We Shoot It Today.<br />
+                  <span className="text-gradient-blue-gold">You Get It Tomorrow.</span>
+                </h1>
+              </AnimatedSection>
+
+              {/* Subhead — hidden on mobile to save space */}
+              <AnimatedSection delay={300}>
+                <p className="hidden sm:block text-white/50 text-sm md:text-base leading-relaxed max-w-lg mb-3 md:mb-4">
+                  Chicago's go-to photography crew for real estate, events, and weddings. Fully edited photos in your inbox by morning. <strong className="text-white/70">Guaranteed.</strong>
+                </p>
+                <p className="sm:hidden text-white/50 text-sm leading-relaxed mb-3">
+                  Real estate, events, weddings — fully edited in 24hrs. <strong className="text-white/70">Guaranteed.</strong>
+                </p>
+              </AnimatedSection>
+
+              {/* Value pills — compact row */}
+              <AnimatedSection delay={350}>
+                <div className="flex flex-wrap gap-1.5 mb-2 md:mb-5">
+                  {[
+                    { icon: Clock, text: '24hr Delivery' },
+                    { icon: Shield, text: '100% Guarantee' },
+                    { icon: Camera, text: '500+ Shoots' },
+                  ].map((item, i) => (
+                    <span key={i} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-white/50 text-[11px]">
+                      <item.icon className="w-3 h-3 text-[oklch(0.65_0.2_250)]" />
+                      {item.text}
+                    </span>
+                  ))}
+                </div>
+              </AnimatedSection>
+
+              {/* CTAs — desktop only (mobile uses form) */}
+              <div className="hidden lg:block">
+                <AnimatedSection delay={450}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <Link
+                      href="/contact"
+                      className="group relative flex items-center gap-2.5 px-6 py-3 bg-gradient-to-r from-[oklch(0.65_0.2_250)] to-[oklch(0.55_0.18_250)] text-white font-display font-bold text-sm rounded-lg hover:shadow-[0_0_30px_oklch(0.65_0.2_250/0.35)] transition-all duration-300 overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shimmer" />
+                      <span className="relative">Book Your Shoot</span>
+                      <ArrowRight className="relative w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                    <Link
+                      href="/services"
+                      className="flex items-center gap-2.5 px-6 py-3 border border-white/10 text-white/60 hover:text-white hover:border-white/20 font-display font-medium text-sm rounded-lg transition-all duration-300"
+                    >
+                      See Pricing
+                    </Link>
+                  </div>
+                  <div className="flex items-center gap-3 text-white/25 text-[11px]">
+                    <span className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400/60" /> No upfront cost</span>
+                    <span className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400/60" /> Free re-shoots</span>
+                    <span className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400/60" /> Cancel anytime</span>
+                  </div>
+                </AnimatedSection>
               </div>
-            </AnimatedSection>
+            </div>
 
-            <AnimatedSection delay={400}>
-              <h1 className="font-display font-extrabold text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[0.95] mb-6">
-                Shot Today.<br />
-                <span className="text-gradient-blue-gold">Delivered</span><br />
-                Tomorrow.
-              </h1>
-            </AnimatedSection>
+            {/* RIGHT — Lead Form */}
+            <div className="lg:col-span-5">
+              <AnimatedSection delay={300} direction="right">
+                <div className="relative">
+                  <div className="absolute -inset-2 bg-gradient-to-br from-[oklch(0.65_0.2_250/0.15)] to-[oklch(0.75_0.14_80/0.08)] rounded-2xl blur-xl animate-glow-pulse hidden lg:block" />
+                  <div className="relative bg-[oklch(0.06_0.02_260/0.9)] backdrop-blur-xl border border-white/[0.08] rounded-xl overflow-hidden">
+                    {/* Urgency banner */}
+                    <div className="bg-gradient-to-r from-[oklch(0.75_0.14_80)] to-[oklch(0.65_0.16_60)] px-4 py-2 text-center">
+                      <span className="text-white text-[11px] font-display font-bold uppercase tracking-wider">
+                        15% Off Your First Shoot — This Month Only
+                      </span>
+                    </div>
 
-            <AnimatedSection delay={600}>
-              <p className="text-white/50 text-lg md:text-xl leading-relaxed max-w-lg mb-10">
-                Premium photography and video production with guaranteed 24-hour delivery. Your vision, our craft.
-              </p>
-            </AnimatedSection>
+                    <div className="p-4 md:p-5">
+                      <h3 className="font-display font-bold text-base md:text-lg text-white mb-0.5 leading-tight">Get Your Free Quote</h3>
+                      <p className="text-white/35 text-[11px] mb-3">30 seconds to fill out. We respond within 1 hour.</p>
 
-            <AnimatedSection delay={800}>
-              <div className="flex flex-col sm:flex-row items-start gap-4">
-                <Link
-                  href="/contact"
-                  className="group relative flex items-center gap-3 px-7 py-4 bg-gradient-to-r from-[oklch(0.65_0.2_250)] to-[oklch(0.55_0.18_250)] text-white font-display font-semibold text-sm rounded-md hover:shadow-[0_0_40px_oklch(0.65_0.2_250/0.4)] transition-all duration-300 overflow-hidden"
-                >
-                  {/* Shimmer effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shimmer" />
-                  <span className="relative">Book a Shoot</span>
-                  <ArrowRight className="relative w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  href="/services"
-                  className="flex items-center gap-3 px-7 py-4 border border-white/15 text-white/70 hover:text-white hover:border-[oklch(0.65_0.2_250/0.3)] hover:shadow-[0_0_20px_oklch(0.65_0.2_250/0.1)] font-display font-medium text-sm rounded-md transition-all duration-300"
-                >
-                  View Services
-                </Link>
-              </div>
-            </AnimatedSection>
+                      <form className="space-y-2" onSubmit={(e) => { e.preventDefault(); window.location.href = '/contact'; }}>
+                        <div className="grid grid-cols-2 gap-2">
+                          <input type="text" placeholder="Name" required className="w-full px-3 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-lg text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[oklch(0.65_0.2_250/0.4)] transition-all" />
+                          <input type="tel" placeholder="Phone" className="w-full px-3 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-lg text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[oklch(0.65_0.2_250/0.4)] transition-all" />
+                        </div>
+                        <input type="email" placeholder="Email Address" required className="w-full px-3 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-lg text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[oklch(0.65_0.2_250/0.4)] transition-all" />
+                        <select
+                          required defaultValue=""
+                          className="w-full px-3 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-lg text-white/25 text-sm focus:outline-none focus:border-[oklch(0.65_0.2_250/0.4)] transition-all appearance-none"
+                          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.25)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+                        >
+                          <option value="" disabled>What do you need?</option>
+                          <option value="real-estate">Real Estate Photography</option>
+                          <option value="events">Event Coverage</option>
+                          <option value="weddings">Wedding Photography</option>
+                          <option value="photo">Portrait / Photo Session</option>
+                          <option value="video">Video Production</option>
+                          <option value="other">Other / Not Sure</option>
+                        </select>
+                        <button type="submit" className="group relative flex items-center justify-center gap-2 w-full px-5 py-3 bg-gradient-to-r from-[oklch(0.65_0.2_250)] to-[oklch(0.55_0.18_250)] text-white font-display font-bold text-sm rounded-lg hover:shadow-[0_0_30px_oklch(0.65_0.2_250/0.35)] transition-all duration-300 overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shimmer" />
+                          <span className="relative">Get My Free Quote</span>
+                          <ArrowRight className="relative w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                      </form>
+
+                      <div className="flex items-center justify-center gap-3 mt-3 pt-3 border-t border-white/[0.05]">
+                        <span className="flex items-center gap-1 text-white/20 text-[10px]"><Shield className="w-2.5 h-2.5" /> Free</span>
+                        <span className="flex items-center gap-1 text-white/20 text-[10px]"><Clock className="w-2.5 h-2.5" /> 1hr reply</span>
+                        <span className="flex items-center gap-1 text-white/20 text-[10px]"><Users className="w-2.5 h-2.5" /> 500+ clients</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedSection>
+            </div>
           </div>
         </div>
 
-        {/* Scroll indicator with glow pulse */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-white/20 text-[10px] uppercase tracking-[0.3em] font-display">Scroll</span>
-          <div className="w-px h-8 bg-gradient-to-b from-[oklch(0.65_0.2_250/0.4)] to-transparent animate-glow-pulse" />
+        {/* Scroll indicator — desktop only */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden lg:flex flex-col items-center gap-1.5 animate-bounce">
+          <span className="text-white/15 text-[9px] uppercase tracking-[0.3em] font-display">Scroll</span>
+          <div className="w-px h-6 bg-gradient-to-b from-[oklch(0.65_0.2_250/0.3)] to-transparent" />
         </div>
       </section>
 
       {/* ═══════════════ STATS BAR ═══════════════ */}
-      <section className="relative bg-[oklch(0.06_0.01_270)] border-y border-white/5 py-12 md:py-16 overflow-hidden">
-        {/* Subtle animated gradient background */}
+      <section className="relative bg-[oklch(0.06_0.01_270)] border-y border-white/5 py-6 md:py-10 overflow-hidden">
         <AnimatedGradient variant="dark" />
         <div className="container relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-3">
             {[
               { value: 24, suffix: 'hr', label: 'Delivery Time' },
               { value: 500, suffix: '+', label: 'Projects Completed' },
@@ -247,10 +304,10 @@ export default function Home() {
               { value: 2, suffix: '', label: 'Cities & Growing' },
             ].map((stat, i) => (
               <AnimatedSection key={i} delay={i * 100} className="text-center">
-                <div className="font-display font-bold text-3xl md:text-4xl text-white mb-1">
+                <div className="font-display font-bold text-2xl md:text-3xl text-white mb-0.5">
                   <CountUp target={stat.value} suffix={stat.suffix} />
                 </div>
-                <div className="text-white/30 text-sm">{stat.label}</div>
+                <div className="text-white/30 text-xs">{stat.label}</div>
               </AnimatedSection>
             ))}
           </div>
@@ -258,20 +315,20 @@ export default function Home() {
       </section>
 
       {/* ═══════════════ SERVICES OVERVIEW ═══════════════ */}
-      <section className="relative py-24 md:py-32 bg-grain overflow-hidden">
+      <section className="relative py-12 md:py-20 bg-grain overflow-hidden">
         <FloatingOrbs variant="subtle" />
         <div className="container relative z-10">
           <AnimatedSection>
             <SectionLabel label="What We Do" number="01" />
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white mb-4 max-w-xl">
+            <h2 className="font-display font-bold text-2xl md:text-4xl text-white mb-2 max-w-xl">
               Services Built for <span className="text-gradient-blue-gold">Speed & Quality</span>
             </h2>
-            <p className="text-white/40 text-lg max-w-xl mb-16">
+            <p className="text-white/40 text-sm md:text-base max-w-xl mb-8 md:mb-12">
               From real estate to weddings, we deliver premium visual content within 24 hours — without compromising on quality.
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {services.map((service, i) => (
               <AnimatedSection key={i} delay={i * 100}>
                 <GlowCard glowColor={service.glowColor} className="bg-card">
@@ -307,24 +364,24 @@ export default function Home() {
       </section>
 
       {/* ═══════════════ WHY THE LENS BROS ═══════════════ */}
-      <section className="relative py-24 md:py-32 overflow-hidden content-auto">
+      <section className="relative py-12 md:py-20 overflow-hidden content-auto">
         <AnimatedGradient variant="accent" />
         <FloatingOrbs variant="section" />
 
         <div className="container relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <AnimatedSection>
                 <SectionLabel label="Why Choose Us" number="02" />
-                <h2 className="font-display font-bold text-3xl md:text-5xl text-white mb-6">
+                <h2 className="font-display font-bold text-2xl md:text-4xl text-white mb-3">
                   The 24-Hour <span className="text-gradient-blue-gold">Promise</span>
                 </h2>
-                <p className="text-white/40 text-lg leading-relaxed mb-10">
-                  In a world where time is everything, we guarantee delivery of your professionally edited photos and videos within 24 hours of your shoot. No exceptions.
+                <p className="text-white/40 text-sm md:text-base leading-relaxed mb-6">
+                  We guarantee delivery of your professionally edited photos and videos within 24 hours of your shoot. No exceptions.
                 </p>
               </AnimatedSection>
 
-              <div className="space-y-6">
+              <div className="space-y-3">
                 {[
                   { icon: Clock, title: '24-Hour Turnaround', desc: 'Guaranteed delivery within 24 hours after every shoot.' },
                   { icon: Camera, title: 'Professional Equipment', desc: 'Top-tier cameras, lenses, drones, and lighting for every project.' },
@@ -379,11 +436,11 @@ export default function Home() {
       </section>
 
       {/* ═══════════════ PORTFOLIO PREVIEW ═══════════════ */}
-      <section className="relative py-24 md:py-32 bg-[oklch(0.06_0.01_270)] content-auto overflow-hidden">
+      <section className="relative py-12 md:py-20 bg-[oklch(0.06_0.01_270)] content-auto overflow-hidden">
         <FloatingOrbs variant="subtle" />
         <div className="container relative z-10">
           <AnimatedSection>
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 md:mb-12">
               <div>
                 <SectionLabel label="Our Work" number="03" />
                 <h2 className="font-display font-bold text-3xl md:text-5xl text-white">
@@ -428,14 +485,14 @@ export default function Home() {
       </section>
 
       {/* ═══════════════ TESTIMONIALS ═══════════════ */}
-      <section className="relative py-24 md:py-32 overflow-hidden bg-grain content-auto">
+      <section className="relative py-12 md:py-20 overflow-hidden bg-grain content-auto">
         <AnimatedGradient variant="dark" />
         <FloatingOrbs variant="section" />
 
         <div className="container relative z-10">
-          <AnimatedSection className="text-center mb-16">
+          <AnimatedSection className="text-center mb-8 md:mb-12">
             <SectionLabel label="Testimonials" number="04" />
-            <h2 className="font-display font-bold text-3xl md:text-5xl text-white">
+            <h2 className="font-display font-bold text-2xl md:text-4xl text-white">
               What Our <span className="text-gradient-blue-gold">Clients</span> Say
             </h2>
           </AnimatedSection>
@@ -464,7 +521,7 @@ export default function Home() {
       </section>
 
       {/* ═══════════════ CTA ═══════════════ */}
-      <section className="relative py-24 md:py-32 overflow-hidden content-auto">
+      <section className="relative py-12 md:py-20 overflow-hidden content-auto">
         <AnimatedGradient variant="accent" />
         <FloatingOrbs variant="hero" />
 
@@ -476,7 +533,7 @@ export default function Home() {
         <div className="container relative z-10 text-center">
           <AnimatedSection>
             <img src={BRAND.iconSmall} alt="" className="w-16 h-16 mx-auto mb-8 opacity-60 animate-glow-pulse" width={64} height={64} loading="lazy" decoding="async" />
-            <h2 className="font-display font-bold text-4xl md:text-6xl text-white mb-6 max-w-3xl mx-auto leading-tight">
+            <h2 className="font-display font-bold text-2xl md:text-4xl text-white mb-4 max-w-2xl mx-auto leading-tight">
               Ready to Create Something <span className="text-gradient-blue-gold">Extraordinary</span>?
             </h2>
             <p className="text-white/40 text-lg max-w-xl mx-auto mb-10">
